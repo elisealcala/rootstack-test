@@ -96,7 +96,7 @@ export default function Home({ accessToken }: HomeProps) {
           </span>
           <div className="w-full relative mt-10">
             <Map
-              style="mapbox://styles/mapbox/streets-v9"
+              style={`mapbox://styles/mapbox/streets-v9`}
               containerStyle={{
                 height: `600px`,
                 width: `100%`,
