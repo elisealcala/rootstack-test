@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 export const useAuth = () => {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [form, setForm] = useState({
     email: ``,
     password: ``,
@@ -18,6 +17,11 @@ export const useAuth = () => {
     });
   };
 
+  const logout = () => {
+    document.cookie = `accessToken=`;
+    router.push(`/login`);
+  };
+
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -27,7 +31,6 @@ export const useAuth = () => {
 
       if (response.data.access_token) {
         document.cookie = `accessToken=${response.data.access_token}`;
-        setIsAuthenticated(true);
         router.push(`/`);
       }
     } catch (e) {
@@ -44,8 +47,8 @@ export const useAuth = () => {
   };
 
   return {
-    isAuthenticated,
     handleChange,
     handleSubmit,
+    logout,
   };
 };
