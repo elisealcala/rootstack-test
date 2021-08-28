@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const useAuth = () => {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [form, setForm] = useState({
     email: ``,
@@ -24,8 +26,9 @@ export const useAuth = () => {
       );
 
       if (response.data.access_token) {
-        localStorage.setItem(`access_token`, response.data.access_token);
+        document.cookie = `access_token=${response.data.access_token}`;
         setIsAuthenticated(true);
+        router.push(`/`);
       }
     } catch (e) {
       toast.error(`Something went wrong`, {
