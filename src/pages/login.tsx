@@ -1,8 +1,10 @@
 import { useAuth } from '@/hooks';
+import { NextPageContext } from 'next';
+import cookies from 'next-cookies';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
-const Login = () => {
+export default function Login() {
   const { handleChange, handleSubmit } = useAuth();
 
   return (
@@ -38,6 +40,21 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Login;
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  const { accessToken } = cookies(ctx);
+
+  if (accessToken) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
