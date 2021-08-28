@@ -26,7 +26,7 @@ export const useAuth = () => {
       );
 
       if (response.data.access_token) {
-        document.cookie = `access_token=${response.data.access_token}`;
+        document.cookie = `accessToken=${response.data.access_token}`;
         setIsAuthenticated(true);
         router.push(`/`);
       }

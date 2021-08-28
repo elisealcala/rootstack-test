@@ -12,9 +12,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
   const { ctx } = appContext;
 
-  const { isAuthenticated } = cookies(ctx);
+  const { accessToken } = cookies(ctx);
 
-  if (isAuthenticated && ctx.res) {
+  if (accessToken && ctx.res) {
     ctx.res.writeHead(301, {
       Location: `/`,
     });
@@ -22,5 +22,5 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     ctx.res.end();
   }
 
-  return { ...appProps, isAuthenticated };
+  return { ...appProps, accessToken };
 };
